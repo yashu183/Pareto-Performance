@@ -1,6 +1,6 @@
-from PerformanceEngine.lp_helper import get_optimal_supplier
+from lp_helper import get_scores
 
-sample_data = [
+supplier_data = [
     {
         "Supplier Name": "Infosys",
         "Region": "APAC",
@@ -55,39 +55,63 @@ sample_data = [
     }
 ]
 
+overall_scores = {}
+for idx, supplier in enumerate(supplier_data):
+    supplier['score'] = 0
+    supplier['id'] = "supplier_{}".format(idx)
+    overall_scores[supplier['id']] = 0
+
 attributes = {
     "Rating": {
         "Objective": "Maximize",
         "tends_to_value": 100,
-        "priority": 1
     },
-    "Country": {
-        "Objective": None,
-        "tends_to_value": "India",
-        "priority": 0
-    },
-    "Service": {
-        "Objective": None,
-        "tends_to_value": "Applications Development",
-        "priority": 0
-    },
+    # "Country": {
+    #     "Objective": None,
+    #     "tends_to_value": "India",
+    #     "priority": 0
+    # },
+    # "Service": {
+    #     "Objective": None,
+    #     "tends_to_value": "Applications Development",
+    #     "priority": 0
+    # },
     "Avg. Cost($)": {
         "Objective": "Minimize",
-        "tends_to_value": 100_000,
-        "priority": 2
+        "tends_to_value": 1,
     },
     "Average Delivery Time": {
         "Objective": "Minimize",
-        "tends_to_value": 30,
-        "priority": 3
+        "tends_to_value": 1,
     },
     "Number of Escalations": {
         "Objective": "Minimize",
-        "tends_to_value": 0,
-        "priority": 4
+        "tends_to_value": 1,
     }
 }
 
-order = ["Rating", "Avg. Cost($)", "Average Delivery Time", "Number of Escalations"]
+attribute_wise_score = {}
 
-print(get_optimal_supplier(sample_data, attributes))
+for key, value in attributes.items():
+    suppliers = []
+    all_constants = {}
+    tends_to_value = 0
+
+    for i in supplier_data:
+        suppliers.append(i["id"])
+        all_constants[i["id"]] = int(i[key])
+        tends_to_value += int(i[key])
+
+    result = get_scores(suppliers,
+                        all_constants,
+                        value["Objective"],
+                        tends_to_value // len(supplier_data))
+    print(result)
+    for v, s in result.items():
+        overall_scores[v] += s
+        attribute_wise_score[key] = result
+
+print(overall_scores)
+print(attribute_wise_score)
+
+# print(get_optimal_supplier(sample_data, attributes))
