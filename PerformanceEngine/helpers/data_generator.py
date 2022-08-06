@@ -19,6 +19,7 @@ with open('PerformanceEngine/all_india_services_data.json') as services_json:
                     print(f"Generating {count} / {total}")
                     count += 1
                     current_supplier = f'{supplier["Company"]} {generate_name()}'
+                    rank = f'{supplier["Rank"]}'
                     delivery_time = random.randint(25, 400)
                     cost_ratio = random.randint(900, 1250)
                     cost = delivery_time * cost_ratio
@@ -36,6 +37,7 @@ with open('PerformanceEngine/all_india_services_data.json') as services_json:
                         "Number of Escalations": escalations,
                         "Year": year,
                         "Resources": resources,
+                        "Rank": rank
                     })
 
 print(len(all_suppliers))
