@@ -14,8 +14,9 @@ def get_overall_score(json_data_path, filters, attributes):
     with open(json_data_path, 'r') as f:
         supplier_data = json.load(f)
 
-    if "Country" in filters:
-        supplier_data = [i for i in supplier_data if i["Country"] == filters["Country"]]
+    for f in filters:
+        if f != "Service":
+            supplier_data = [i for i in supplier_data if i[f] == filters[f]]
 
     overall_scores = {}
     for idx, supplier in enumerate(supplier_data):
