@@ -66,16 +66,6 @@ attributes = {
         "Objective": "Maximize",
         "tends_to_value": 100,
     },
-    # "Country": {
-    #     "Objective": None,
-    #     "tends_to_value": "India",
-    #     "priority": 0
-    # },
-    # "Service": {
-    #     "Objective": None,
-    #     "tends_to_value": "Applications Development",
-    #     "priority": 0
-    # },
     "Avg. Cost($)": {
         "Objective": "Minimize",
         "tends_to_value": 1,
@@ -90,22 +80,25 @@ attributes = {
     }
 }
 
+# Get Scores using paretoset logic
+
+
+
+# Get Scores using Linear Programming
 attribute_wise_score = {}
 
 for key, value in attributes.items():
     suppliers = []
     all_constants = {}
-    tends_to_value = 0
 
     for i in supplier_data:
         suppliers.append(i["id"])
         all_constants[i["id"]] = int(i[key])
-        tends_to_value += int(i[key])
 
     result = get_scores(suppliers,
                         all_constants,
                         value["Objective"],
-                        tends_to_value // len(supplier_data))
+                        value["tends_to_value"])
     print(result)
     for v, s in result.items():
         overall_scores[v] += s
