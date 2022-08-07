@@ -34,15 +34,17 @@ def get_overall_score(json_data_path, filters, attributes):
         print(f"Running {comb} for paretoset")
         data = {}
         sense = []
+        total_weightage = 0
         for attribute in comb:
             data[attribute] = []
             for supplier in supplier_data:
                 data[attribute].append(supplier[attribute])
             sense.append(paretoset_sense[attributes[attribute]["Objective"]])
+            total_weightage += attributes[attribute]["Weightage"]
 
         scores = get_paretoset_scores(data, sense)
         for i in scores:
-            overall_scores[i] += paretoset_score
+            overall_scores[i] += paretoset_score * (total_weightage if total_weightage != 0 else 1)
 
     paretoset_end = time.time()
     print(f"Paretoset Completed in {int(paretoset_end - paretoset_start)} seconds")
@@ -60,7 +62,7 @@ def get_overall_score(json_data_path, filters, attributes):
 
         result = get_linear_programming_scores(suppliers, all_constants, value["Objective"], value["tends_to_value"])
         for v, s in result.items():
-            overall_scores[int(v.split("_")[1])] += s
+            overall_scores[int(v.split("_")[1])] += s * attributes[key]["Weightage"]
 
     lp_end = time.time()
     print(f"LP Completed in {int(lp_end - lp_start)} seconds")
