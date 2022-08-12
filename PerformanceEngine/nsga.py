@@ -8,12 +8,12 @@ from pymoo.core.problem import ElementwiseProblem
 
 class MyProblem(ElementwiseProblem):
 
-    def __init__(self):
-        super().__init__(n_var=2,
-                         n_obj=2,
-                         n_ieq_constr=2,
-                         xl=np.array([-2,-2]),
-                         xu=np.array([2, 2]))
+    def __init__(self, n_var=2, n_obj=2, n_ieq_constr=2, xl=np.array([0, 0]), xu=np.array([2, 2]) ):
+        super().__init__(n_var=n_var,
+                         n_obj=n_obj,
+                         n_ieq_constr=n_ieq_constr,
+                         xl=xl,
+                         xu=xu)
 
     def _evaluate(self, x, out, *args, **kwargs):
         f1 = 100 * (x[0]**2 + x[1]**2)
@@ -24,6 +24,9 @@ class MyProblem(ElementwiseProblem):
 
         out["F"] = [f1, f2]
         out["G"] = [g1, g2]
+
+
+
 
 
 problem = MyProblem()

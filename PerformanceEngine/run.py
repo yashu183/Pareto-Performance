@@ -4,6 +4,7 @@ filters = {
     "Service": "Applications Development",
     "Average Delivery Time": 30
 }
+
 attributes = {
     "Rating": {
         "Objective": "Maximize",
@@ -31,7 +32,7 @@ attributes = {
         "tends_to_value": 1,
     }
 }
-json_data_path = f'/Users/vigneswaran/Projects/sirion/SupplierPerformance/sample_data/{filters["Service"]}.json'
+json_data_path = f'/Users/vigneswaran/Projects/sirion/SupplierPerformance/sample_data/all_suppliers.json'
 print(get_overall_score(json_data_path, filters, attributes))
 
 

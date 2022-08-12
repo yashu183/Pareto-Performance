@@ -1,6 +1,6 @@
-paretoset_sense = {
+moo_all_objectives = {
     "Maximize": "max",
     "Minimize": "min"
 }
 
-paretoset_score = 15
+moo_score = 15
