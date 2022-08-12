@@ -2,6 +2,7 @@ from utils.engine import get_overall_score
 
 filters = {
     "Service": "Applications Development",
+    "Average Delivery Time": 30
 }
 attributes = {
     "Rating": {
@@ -32,3 +33,8 @@ attributes = {
 }
 json_data_path = f'/Users/vigneswaran/Projects/sirion/SupplierPerformance/sample_data/{filters["Service"]}.json'
 print(get_overall_score(json_data_path, filters, attributes))
+
+
+# pareToTest1759
+
+# mongoimport --host ac-czsi2w9-shard-00-02.lkpj03b.mongodb.net:27017 --db supliers --type json --file "/Users/vigneswaran/Projects/sirion/SupplierPerformance/sample_data/all_suppliers.json" --jsonArray --authenticationDatabase admin --ssl --username VigneswaranB97 --password pareToTest1759
